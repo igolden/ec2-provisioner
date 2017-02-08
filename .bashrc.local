@@ -1,0 +1,7 @@
+alias ll='ls -lG'
+alias vim="sudo vi"
+alias be="bundle exec"
+alias es="exec $SHELL"
+
+source /usr/local/share/chruby/chruby.sh
+chruby ruby-2.3.0
