@@ -16,8 +16,8 @@ gem install rake
 
 echo "Starting env setup.. "
 
-sudo useradd -d /home/deploy -m deploy sudo
-sudo passwd deploy
+sudo useradd -d /home/deploy -m deploy
+sudo useradd -d /home/deploy -m deploy
 sudo usermod -s /bin/bash deploy
 
 mkdir $PROJECT_NAME
@@ -39,5 +39,16 @@ EOT
 sudo -u postgres createuser -s $PROJECT_NAME
 sudo -u postgres psql
 
-echo "YOU STILL NEED TO CREATE A DB"
-echo "sudo -u postgres createdb -O project project_production"
+echo "---------------------------------------------------------------"
+echo "| YOU STILL NEED TO CREATE A DB"
+echo "| sudo -u postgres createdb -O project project_production"
+echo "| "
+echo "| YOU STILL NEED TO MAKE DEPLOY SUDO"
+echo "| sudo visudo and add 'deploy ALL=(ALL:ALL) ALL'"
+echo "| "
+echo "| YOU STILL NEED TO GENERATE SSH FOR DEPLOY, ADD TO GITHUB"
+echo "| ssh-keygen && cat .ssh/id_rsa.pub"
+echo "| "
+echo "| LASTLY, ADD YOUR PERSONAL KEY TO INSTANCE"
+echo "| sudo vim .ssh/authorized_keys"
+echo "---------------------------------------------------------------"
