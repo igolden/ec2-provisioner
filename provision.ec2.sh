@@ -1,43 +1,29 @@
 echo "Installing tools"
 
-PROJECT_NAME=seekerlocal
-sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install git -y && sudo apt-get install wget -y
-sudo apt-get install make -y
-sudo apt-get install postgresql postgresql-contrib libpq-dev -y
-sudo apt-get install ruby ruby-dev ruby2.3-dev -y
-sudo apt-get install nodejs -y
-sudo apt-get install nginx -y
-sudo apt-get install vim -y
-sudo apt-get install libgmp3-dev
+PROJECT_NAME=flagsilk
+USERNAME=igolden
+REPO=
 
+# setup yarn and nodejs for webpacker
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+# update ubuntu
+sudo apt-get update && sudo apt-get upgrade -y
+
+# install system dependencies
+sudo apt-get install git-core curl zlib1g-dev build-essential \
+                     libssl-dev libreadline-dev libyaml-dev   \
+                     libsqlite3-dev sqlite3 libxml2-dev       \
+                     libxslt1-dev libcurl4-openssl-dev        \
+                     software-properties-common libffi-dev    \
+                     nodejs yarn vim wget -y
+
+# install ruby dependencies
 gem install bundler
 gem install rake
 
-echo "Starting env setup.. "
-
-sudo useradd -d /home/deploy -m deploy
-sudo useradd -d /home/deploy -m deploy
-sudo usermod -s /bin/bash deploy
-
-mkdir $PROJECT_NAME
-mkdir -p $PROJECT_NAME/shared/config
-touch $PROJECT_NAME/.env
-
-cat <<EOT >> $PROJECT_NAME/shared/config/database.yml
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: `${PROJECT_NAME}_production`
-  username: $PROJECT_NAME
-  password: $PROJECT_NAME
-  host: localhost
-  port: 5432
-
-EOT
-
-sudo -u postgres createuser -s $PROJECT_NAME
-sudo -u postgres psql
 
 echo "---------------------------------------------------------------"
 echo "| YOU STILL NEED TO CREATE A DB"
